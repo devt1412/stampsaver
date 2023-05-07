@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DisplayData"
+    android:background="@color/white">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rv"
+        android:layout_below="@id/toolbar"
+        />
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:layout_alignParentTop="true"
+        android:background="@color/blueshade"
+        app:title="Saved time-stamps"
+        app:titleTextColor="@color/white"
+        />
+
+    <TextView
+        android:id="@+id/rand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:textSize="20sp"
+        android:fontFamily="@font/stampsaver_galada_regular"
+        android:textColor="@color/blueshade"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:text="How it works?:\n\n1. Go to YouTube and browse any video\n\n2. Click share and select StampSaver\n\n3. Type the title and timestamp of your choice\n\n4. Click the save button to save the video"
+        />
+
+    <View
+        android:layout_below="@id/toolbar"
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+</RelativeLayout>
