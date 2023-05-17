@@ -47,4 +47,13 @@ public class DBmain extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getWritableDatabase();
         db.delete("Stamps", "title=?",new String[]{name});
     }
+    public void update(String title,String name, String time,String link){
+
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put("title",name);
+        contentValues.put("stamp",time);
+        contentValues.put("link",link);
+        db.update("Stamps", contentValues, "title=?", new String[]{title});
+    }
 }

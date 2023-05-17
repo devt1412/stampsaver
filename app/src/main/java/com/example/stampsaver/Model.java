@@ -1,10 +1,10 @@
 package com.example.stampsaver;
 
 public class Model {
-    private String stitle;
-    private String slink;
-    private String sstamp;
-    private String sthumb;
+    public String stitle;
+    public String slink;
+    public String sstamp;
+    public String sthumb;
 
 
     public Model(String stitle, String slink, String sstamp, String sthumb) {

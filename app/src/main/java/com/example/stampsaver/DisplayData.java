@@ -25,7 +25,7 @@ public class DisplayData extends AppCompatActivity implements MyAdapter.OnClickL
 ArrayList<Model> modelArrayList;
 DBmain DB;
 SQLiteDatabase db;
-Dialog dialog,dialog2;
+Dialog dialog,dialog2,dialog3;
 TextView rand;
 MyAdapter myAdapter;
     @Override
@@ -43,6 +43,10 @@ MyAdapter myAdapter;
         dialog2.setContentView(R.layout.deletedialog);
         dialog2.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog2.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background));
+        dialog3=new Dialog(DisplayData.this);
+        dialog3.setContentView(R.layout.editdialog);
+        dialog3.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog3.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background));
        modelArrayList=new ArrayList<>();
         if(modelArrayList.isEmpty()){
             rand.setVisibility(View.VISIBLE);}
@@ -86,24 +90,68 @@ MyAdapter myAdapter;
     @Override
     public void onItemLongClick(int position) {
        dialog.show();
-        FloatingActionButton yes,no;
-        yes=dialog.findViewById(R.id.yesbt);
-        no=dialog.findViewById(R.id.nobt);
-        yes.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton edit,delete,yes,no,eyes,eno;
+        TextView edtitle,edtime;
+        edit=dialog.findViewById(R.id.updatebt);
+        delete=dialog.findViewById(R.id.deletebt);
+        yes=dialog2.findViewById(R.id.yesbt);
+        no=dialog2.findViewById(R.id.nobt);
+        eyes=dialog3.findViewById(R.id.edyesbt);
+        eno=dialog3.findViewById(R.id.ednobt);
+        edtitle=dialog3.findViewById(R.id.edititle);
+        edtime=dialog3.findViewById(R.id.editime);
+        edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DB.delete(String.valueOf(modelArrayList.get(position).getStitle()));
-                modelArrayList.remove(position);
-                myAdapter.notifyItemRemoved(position);
-                dialog.dismiss();
+
+                dialog3.show();
+                edtitle.setText(modelArrayList.get(position).getStitle());
+                edtime.setText(modelArrayList.get(position).getSstamp());
+                eyes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String lnk=modelArrayList.get(position).getSlink();
+                        String l=edtime.getText().toString();
+                        lnk="https://m.youtube.com/watch?t="+l.substring(0,2)+"m"+l.substring(3)+lnk.substring(35);
+                        DB.update(modelArrayList.get(position).getStitle(),edtitle.getText().toString(),edtime.getText().toString(),lnk);
+                        modelArrayList.get(position).setStitle(edtitle.getText().toString());
+                        modelArrayList.get(position).setSstamp(edtime.getText().toString());
+                        modelArrayList.get(position).setSlink(lnk);
+                        myAdapter.notifyDataSetChanged();
+                        dialog3.dismiss();
+                    }
+                });
+                eno.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog3.dismiss();
+                    }
+                });
+
             }
         });
-        no.setOnClickListener(new View.OnClickListener() {
+        delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.dismiss();
+                dialog2.show();
+                yes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DB.delete(String.valueOf(modelArrayList.get(position).getStitle()));
+                        modelArrayList.remove(position);
+                        myAdapter.notifyItemRemoved(position);
+                        dialog2.dismiss();
+                    }
+                });
+                no.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog2.dismiss();
+                    }
+                });
             }
         });
+
     }
 
     @Override
